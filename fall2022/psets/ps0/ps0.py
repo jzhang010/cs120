@@ -30,8 +30,11 @@ class BTvertex:
 # ... tree rooted at vertex v to the size of that subtree
 # Runtime: O(n)
 def calculate_sizes(v):
-    # Your code goes here
-    pass
+    if v is None: 
+      return 0
+    else: 
+      v.size = 1 + calculate_sizes(v.left) + calculate_sizes(v.right)
+    return v.size
 
 #
 # Problem 1c
@@ -43,5 +46,16 @@ def calculate_sizes(v):
 # ... in disjoint trees that all have at most n/2 vertices
 # Runtime: O(h)
 def find_vertex(r): 
-    # Your code goes here
-    pass
+    n = r.size
+    cur = r
+    while (cur.left and cur.left.size > n/2) or (cur.right and cur.right.size > n/2):
+      if cur.left and cur.left.size > n/2:
+        cur = cur.left
+      else:
+        cur = cur.right
+    return cur
+
+
+      
+
+
