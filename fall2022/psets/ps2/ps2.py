@@ -1,3 +1,6 @@
+from re import S
+
+
 class BinarySearchTree:
     # left: BinarySearchTree
     # right: BinarySearchTree
@@ -89,17 +92,19 @@ class BinarySearchTree:
     '''
     def insert(self, key):
         if self.key is None:
-            self.key = key
-            self.calculate_sizes()
+            self.key = key    
         elif self.key > key: 
+            self.size += 1
             if self.left is None:
                 self.left = BinarySearchTree(self.debugger)
             self.left.insert(key)
         elif self.key < key:
+            self.size += 1
             if self.right is None:
                 self.right = BinarySearchTree(self.debugger)
             self.right.insert(key)
         return self
+        
 
     
     ####### Part b #######
@@ -125,9 +130,38 @@ class BinarySearchTree:
         /
        11 
     '''
+
+    
     def rotate(self, direction, child_side):
-        # Your code goes here
+        if (child_side == "L" and direction == "L"):
+          self.left = self.rotateLeft(self.left, self.left.right)
+        elif (child_side == "R" and direction == "L"): 
+          self.right = self.rotateLeft(self.right, self.right.right)
+        elif (child_side == "L" and direction == "R"):
+           self.left = self.rotateRight(self.left, self.left.left)
+        else:
+          self.right = self.rotateRight(self.right, self.right.left)
         return self
+
+    def rotateLeft(self, x, y):
+      a = 0 if y.left is None else y.left.size
+      b = 0 if y.right is None else y.right.size
+      c = 0 if x.left is None else x.left.size
+      x.right = y.left 
+      x.size = b + c + 1
+      y.left = x
+      y.size = a + x.size + 1
+      return y 
+
+    def rotateRight(self, x, y):
+      a = 0 if x.left is None else x.left.size
+      b = 0 if y.left is None else y.left.size
+      c = 0 if y.right is None else y.right.size
+      x.left = y.right
+      x.size = a + b + 1
+      y.right = x
+      y.size = x.size + c + 1
+      return y 
 
     def print_bst(self):
         if self.left is not None:
