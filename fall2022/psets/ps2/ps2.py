@@ -144,23 +144,23 @@ class BinarySearchTree:
         return self
 
     def rotateLeft(self, x, y):
-      a = 0 if y.left is None else y.left.size
-      b = 0 if y.right is None else y.right.size
-      c = 0 if x.left is None else x.left.size
-      x.right = y.left 
-      x.size = b + c + 1
-      y.left = x
-      y.size = a + x.size + 1
-      return y 
-
-    def rotateRight(self, x, y):
       a = 0 if x.left is None else x.left.size
       b = 0 if y.left is None else y.left.size
       c = 0 if y.right is None else y.right.size
-      x.left = y.right
+      x.right = y.left 
       x.size = a + b + 1
+      y.left = x
+      y.size = c + x.size + 1
+      return y 
+
+    def rotateRight(self, x, y):
+      a = 0 if y.left is None else y.left.size
+      b = 0 if y.right is None else y.right.size
+      c = 0 if x.right is None else x.right.size
+      x.left = y.right
+      x.size = b + c + 1
       y.right = x
-      y.size = x.size + c + 1
+      y.size = x.size + a + 1
       return y 
 
     def print_bst(self):
